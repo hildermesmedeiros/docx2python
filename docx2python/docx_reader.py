@@ -391,6 +391,11 @@ class DocxReader:
                     image_copy.write(image_bytes)
         return images
 
+    def close(self):
+        self.__zipf.close()
+
+    def __del__(self):
+        self.__zipf.close()
 
 def _copy_but(
     in_zip: zipfile.ZipFile, out_zip: zipfile.ZipFile, exclusions: Optional[Set] = None
@@ -407,3 +412,5 @@ def _copy_but(
         if item.filename not in exclusions:
             buffer = in_zip.read(item.filename)
             out_zip.writestr(item, buffer)
+    in_zip.close()
+    out_zip.close()
