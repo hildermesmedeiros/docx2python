@@ -176,3 +176,6 @@ class DocxContent:
 
     def save_images(self, image_folder: str) -> Dict[str, bytes]:
         return self.docx_reader.pull_image_files(image_folder)
+
+    def __del__(self):
+        self.docx_reader.close()
